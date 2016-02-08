@@ -1,0 +1,17 @@
+- hosts: all
+
+  tasks:
+  - name: Download Racket installer
+    get_url:
+      url: https://mirror.racket-lang.org/releases/6.3/installers/racket-6.3-x86_64-linux-ubuntu-precise.sh
+      dest: /opt/racket-installer.sh
+      validate_certs: no
+      timeout: 3600
+      mode: 0770
+    become: yes
+
+  - name: Install Racket
+    command: /opt/racket-installer.sh --unix-style --dest /usr/
+    args:
+      creates: /usr/bin/racket
+    become: yes
